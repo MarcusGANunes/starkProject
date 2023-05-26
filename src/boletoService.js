@@ -24,33 +24,23 @@ const getInsufficientBalancePaymentFailures = async () => {
   return payments
 }
 
-const retryFailedPayment = async () => {
-  let payments = await starkbank.boletoPayment.create([
+const retryFailedPayment = async (cnpj, line, scheduled) => {
+  let payment = await starkbank.boletoPayment.create([
     {
-        taxId: '012.345.678-90',
-        description: 'take my money',
-        scheduled: '2023-03-13',
-        line: '34191.09008 64694.017308 71444.640008 1 96610000014500',
-        tags: ['take', 'my', 'money'],
-    },
-    {
-        taxId: '012.345.678-90',
-        description: 'take my money one more time',
-        scheduled: '2023-03-14',
-        barCode: '34191972300000289001090064694197307144464000',
-        tags: ['again'],
-    },
-])
+        taxId: cnpj,
+        description: 'retrying boleto payment',
+        scheduled,
+        line,
+        tags: []
+    }
+  ])
+  return payment
 }
-
-  // const getTodayPendingpayments = () => 
-
-  // let boleto = await starkbank.boleto.get('5054323138494464')
-  // console.log(boleto);
 
 module.exports = {
   getBalance,
   getFailedPayments,
   getInsufficientBalancePaymentFailures,
-  getBoleto
+  getBoleto,
+  retryFailedPayment
 }
