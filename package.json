@@ -1,0 +1,20 @@
+{
+  "name": "starkproject",
+  "version": "1.0.0",
+  "config": {},
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node ./src/index.js",
+    "createKeys": "node ./utils/createKeys.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "moment": "^2.29.4",
+    "starkbank": "^2.17.0"
+  }
+}
