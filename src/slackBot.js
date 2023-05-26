@@ -16,6 +16,7 @@ const app = new App({
     let resp = await axios.get(`https://api.quotable.io/random`);
     const quote = resp.data.content;
     await say(`Hello, <@${message.user}>, ${quote}`);
+    console.log('teste')
   });
   console.log(`⚡ Bolt app is running!`);
 })();
