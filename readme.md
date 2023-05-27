@@ -12,4 +12,4 @@
      ```
      OBS: No momento, o app está configurado apenas para execução local.
 3. Os boletos em PDF gerados ficam armazenados em ./boletoFiles
-4. Use o script ```npm run dev```
+4. Use o script ```npm run dev``` para executar o servidor.
