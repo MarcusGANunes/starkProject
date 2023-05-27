@@ -10,4 +10,4 @@
     URL_ENDPOINT=value
   ```
   O valor de URL_ENDPOINT corresponde ao servidor do app.
-3. Os boletos em PDF gerados ficam armazenados em ./boletoFiles
+1. Os boletos em PDF gerados ficam armazenados em ./boletoFiles
