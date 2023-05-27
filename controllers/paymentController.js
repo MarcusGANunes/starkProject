@@ -28,7 +28,7 @@ exports.getTodayScheduledPayments = async (req, res, next) => {
     requests.push(request)
   }
 
-  const todayRequests = requests.filter(request => request.due.includes(moment.utc().format('YYYY-MM-DD')))
+  const todayRequests = requests.filter(request => request.due.includes(moment.utc().format('YYYY-MM-DD')) && request.type === 'boleto-payment')
 
   res.status(200).json({
     success: true,

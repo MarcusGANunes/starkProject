@@ -17,7 +17,7 @@ const setUser = async () => {
 exports.getBalance = async (req, res, next) => {
     await setUser()
   
-    const balance = (await starkbank.balance.get()).amount
+    const balance = ((await starkbank.balance.get()).amount)/100
 
     res.status(200).json({
       success: true,
