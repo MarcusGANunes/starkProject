@@ -17,50 +17,25 @@ const getBalance = async () => {
   return starkbank.balance.get()
 }
 
-const getFailedPayments = async () => {
+const createBoleto = async (payload) => {
   await setUser()
-  const payments = await starkbank.boletoPayment.query({
-    status: 'failed',
-    due: moment().utc().format()
-  })
-  const failedPayments = []
-  for await (let payment of payments) {
-    failedPayments.push(payment);
-  }
-  return failedPayments
-}
-
-const getBoleto = async () => {
-  await setUser()
-  return starkbank.boleto.get('5471095918428160')
-}
-
-const getInsufficientBalancePaymentFailures = async () => {
-  await setUser()
-  const allFailedPayments = await getFailedPayments()
-  const balance = await getBalance()
-  const payments = allFailedPayments.filter(payment => payment.amount > balance)
-  return payments
-}
-
-const retryFailedPayment = async (cnpj, line, scheduled) => {
-  await setUser()
-  let payment = await starkbank.boletoPayment.create([
+  return starkbank.boleto.create([
     {
-        taxId: cnpj,
-        description: 'retrying boleto payment',
-        scheduled,
-        line,
-        tags: []
+      amount: payload.amount,
+      name: payload.customerName,
+      taxId: payload.CNPJ,
+      streetLine1: payload.street,
+      streetLine2: payload.complement,
+      district: payload.district,
+      city: payload.city,
+      stateCode: payload.state,
+      zipCode: payload.zipCode,
+      due: payload.due
     }
   ])
-  return payment
 }
 
 module.exports = {
   getBalance,
-  getFailedPayments,
-  getInsufficientBalancePaymentFailures,
-  getBoleto,
-  retryFailedPayment
+  createBoleto,
 }
