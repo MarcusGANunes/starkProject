@@ -57,7 +57,7 @@ exports.sendMailBoleto = async (req, res, next) => {
   const id = req.params.id
   const sender = process.env.EMAIL_SENDER
   const senderPassword = process.env.SENDER_PASSWORD
-  const receiver = 'kalil1@criacaodeboleto-hacka23.sandbox.starkbank.com'
+  const receiver = req.params.email//'kalil1@criacaodeboleto-hacka23.sandbox.starkbank.com'
 
   let transporter = nodemailer.createTransport({
     host: 'smtp-mail.outlook.com',

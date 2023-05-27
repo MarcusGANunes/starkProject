@@ -5,6 +5,6 @@ const { createBoleto, getBoletoPDF, sendMailBoleto } = require('../controllers/b
 
 router.route('/boleto').post(createBoleto)
 router.route('/getBoletoPDF/:id').get(getBoletoPDF)
-router.route('/sendMailBoleto/:id').get(sendMailBoleto)
+router.route('/sendMailBoleto/:email/:id').get(sendMailBoleto)
 
 module.exports = router
