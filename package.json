@@ -1,10 +1,6 @@
 {
   "name": "starkproject",
   "version": "1.0.0",
-  "config": {
-    "token": "xoxb-5312343554343-5324095623589-cGjB23t2ubAPy8h2ANpRqv3j",
-    "secret": "a6f467606b7b6b2a795585a0ba796cfc"
-  },
   "description": "",
   "main": "index.js",
   "scripts": {

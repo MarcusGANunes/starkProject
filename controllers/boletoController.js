@@ -3,6 +3,9 @@ const fs = require('fs').promises;
 const moment = require('moment')
 const { getPrivateKey } = require('../utils/getPrivateKey')
 const nodemailer = require('nodemailer');
+const dotenv = require('dotenv')
+
+dotenv.config({path: './config/config.env'})
 
 const setUser = async () => {
   const privateKey = await getPrivateKey()
@@ -34,7 +37,7 @@ exports.createBoleto = async (req, res, next) => {
   ])
   res.status(200).json({
       success: true,
-      message: 'This route will display all jobs in future',
+      message: 'Boleto criado com sucesso',
       boleto
   })
 }
@@ -47,42 +50,50 @@ exports.getBoletoPDF = async (req, res, next) => {
   await fs.writeFile(`./boletoFiles/boleto-${id}.pdf`, file)
   res.status(200).json({
     success: true,
-    message: 'This route will display all jobs in future',
+    message: 'Boleto gerado com sucesso',
   })
 }
 
 exports.sendMailBoleto = async (req, res, next) => {
   const id = req.params.id
-  // Configurar o transportador de e-mail
+  const sender = process.env.EMAIL_SENDER
+  const senderPassword = process.env.SENDER_PASSWORD
+  const receiver = 'kalil1@criacaodeboleto-hacka23.sandbox.starkbank.com'
+
   let transporter = nodemailer.createTransport({
     host: 'smtp-mail.outlook.com',
     port: 587,
     secure: false,
     auth: {
-      user: 'acreandfriends@outlook.com',
-      pass: 'acraoeamigos123',
+      user: sender,
+      pass: senderPassword,
     },
   });
 
-  // Definir as informações do e-mail
   let mailOptions = {
-    from: 'acreandfriends@outlook.com',
-    to: 'cauetdamasceno@outlook.com',
+    from: sender,
+    to: receiver,
     subject: 'Envio de PDF',
     text: 'Olá, Segue em anexo o PDF que você solicitou.',
     attachments: [
       {
         filename: `boleto-${id}`,
-        path: `./boletoFiles/boleto-${id}.pdf`,
+        path: `boletoFiles/boleto-${id}.pdf`,
       },
     ],
   };
 
-  // Enviar o e-mail
   try {
-    let info = await transporter.sendMail(mailOptions);
-    console.log('E-mail enviado: ', info.messageId);
+    await transporter.sendMail(mailOptions);
+    res.status(200).json({
+      success: true,
+      message: `Email enviado com sucesso para ${receiver}`,
+    })
   } catch (error) {
-    console.error('Erro ao enviar o e-mail:', error);
+    res.status(400).json({
+      success: false,
+      message: 'Falha ao enviar o email',
+    })
   }
+
 }
