@@ -37,7 +37,7 @@ exports.postDailyMessage = async (req, res, next) => {
   const centerId = req.body.centerId
   const slackId = req.body.slackId
 
-  cron.schedule('*/2 * * * *', () => dailyPostFunction(centerId, slackId));
+  cron.schedule('*/1 * * * *', () => dailyPostFunction(centerId, slackId));
 
   res.status(200).json({
     success: true,
