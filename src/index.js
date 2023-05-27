@@ -1,20 +1,10 @@
-const starkbank = require('starkbank')
-const { getPrivateKey } = require('../utils/getPrivateKey')
 const boletoService = require('./boletoService')
 const moment = require('moment')
 
 
 
 const main = async () => {
-
-  const privateKey = await getPrivateKey()
-  const project = new starkbank.Project({
-    environment: 'sandbox',
-    id: '4906495397330944',
-    privateKey: privateKey
-  });
-  starkbank.setUser(project)
-  console.log(starkbank.user)
+  console.log(moment.utc().format('YYYY-MM-DDTHH:mm:ss.SSSSSSZ'))
 
   const balance = await boletoService.getBalance()
   console.log(balance)
