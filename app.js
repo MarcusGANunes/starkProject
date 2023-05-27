@@ -1,14 +1,14 @@
 const express = require('express')
 const app = express()
+const cors = require('cors')
 
 const dotenv = require('dotenv')
 
 app.use(express.json())
+app.use(cors())
 
-// setting up environment variables
 dotenv.config({path: './config/config.env'})
 
-// creating the first middleware
 const middleware = (req, res, next) =>{
     req.newField = 'whats up?'
     next()
@@ -16,14 +16,15 @@ const middleware = (req, res, next) =>{
 
 app.use(middleware)
 
-// importing all routes
 const boleto = require('./routes/boleto')
 const slack = require('./routes/slack')
 const payment = require('./routes/payment')
+const balance = require('./routes/balance')
 
 app.use('/api/v1', boleto)
 app.use('/api/v1', payment)
 app.use('/api/v1', slack)
+app.use('/api/v1', balance)
 
 const PORT = process.env.PORT
 const ENVIRONMENT = process.env.NODE_ENV

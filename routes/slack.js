@@ -1,8 +1,9 @@
 const express = require('express')
 const router = express.Router()
 
-const { postMessage } = require('../controllers/slackController')
+const { postDailyMessage, alertBelowBalance} = require('../controllers/slackController')
 
-router.route('/postMessage').post(postMessage)
+router.route('/postDailyMessage').post(postDailyMessage)
+router.route('/alertBelowBalance').post(alertBelowBalance)
 
 module.exports = router
