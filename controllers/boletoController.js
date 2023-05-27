@@ -18,7 +18,6 @@ const setUser = async () => {
 
 exports.createBoleto = async (req, res, next) => {
   const payload = req.body.data
-  console.log(payload)
   await setUser()
 
   const boleto = await starkbank.boleto.create([
@@ -35,7 +34,6 @@ exports.createBoleto = async (req, res, next) => {
       due: payload.due
     }
   ])
-  console.log(boleto)
   res.status(200).json({
       success: true,
       message: 'Boleto criado com sucesso',
@@ -60,7 +58,6 @@ exports.sendMailBoleto = async (req, res, next) => {
   const sender = process.env.EMAIL_SENDER
   const senderPassword = process.env.SENDER_PASSWORD
   const receiver = req.params.email//'kalil1@criacaodeboleto-hacka23.sandbox.starkbank.com'
-  console.log(id, receiver)
 
   let transporter = nodemailer.createTransport({
     host: 'smtp-mail.outlook.com',
