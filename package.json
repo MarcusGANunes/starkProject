@@ -14,10 +14,13 @@
   "license": "ISC",
   "dependencies": {
     "@slack/bolt": "^3.13.1",
+    "@slack/events-api": "^3.0.1",
+    "@slack/web-api": "^6.8.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "fs": "^0.0.1-security",
     "moment": "^2.29.4",
+    "ngrok": "^5.0.0-beta.2",
     "nodemailer": "^6.9.2",
     "starkbank": "^2.17.0"
   },

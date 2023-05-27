@@ -1,22 +1,13 @@
-const axios = require('axios');
+const { WebClient } = require('@slack/web-api')
+const { createEventAdapter } = require('@slack/events-api')
 require('dotenv').config()
-const { App } = require('@slack/bolt');
 const signingSecret = process.env.SLACK_SIGNING_SECRET
-const botToken = process.env.SLACK_BOT_TOKEN
-console.log(signingSecret, botToken)
-const app = new App({
-  signingSecret: signingSecret,
-  token: botToken,
-});
+const token = process.env.SLACK_BOT_TOKEN
 
-(async () => { 
-  await app.start(process.env.PORT || 12000);
+const slackEvents = createEventAdapter(signingSecret)
+const slackClient = new WebClient(token)
 
-  app.message('Citação', async ({ message, say }) => {
-    let resp = await axios.get(`https://api.quotable.io/random`);
-    const quote = resp.data.content;
-    await say(`Hello, <@${message.user}>, ${quote}`);
-    console.log('teste')
-  });
-  console.log(`⚡ Bolt app is running!`);
-})();
+await slackEvents.on('app_mention', async (event) => {
+  console.log(`Message from ${event.user}: ${event.text}`)
+  await slackClient.chat.postMessage({ channel: event.channel, text: 'Texto'})
+})

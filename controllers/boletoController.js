@@ -1,6 +1,5 @@
 const starkbank = require('starkbank')
 const fs = require('fs').promises;
-const moment = require('moment')
 const { getPrivateKey } = require('../utils/getPrivateKey')
 const nodemailer = require('nodemailer');
 const dotenv = require('dotenv')
@@ -95,5 +94,4 @@ exports.sendMailBoleto = async (req, res, next) => {
       message: 'Falha ao enviar o email',
     })
   }
-
 }

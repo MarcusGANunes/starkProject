@@ -18,8 +18,12 @@ app.use(middleware)
 
 // importing all routes
 const boleto = require('./routes/boleto')
+const slack = require('./routes/slack')
+const payment = require('./routes/payment')
 
 app.use('/api/v1', boleto)
+app.use('/api/v1', slack)
+app.use('/api/v1', payment)
 
 const PORT = process.env.PORT
 const ENVIRONMENT = process.env.NODE_ENV
