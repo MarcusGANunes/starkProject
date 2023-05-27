@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "prod": "SET NODE_ENV=production & node app.js"
+    "prod": "SET NODE_ENV=production & node app.js",
+    "createKeys": "node ./utils/createKeys.js"
   },
   "keywords": [],
   "author": "",
