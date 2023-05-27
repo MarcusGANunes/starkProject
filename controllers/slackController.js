@@ -45,8 +45,6 @@ exports.postDailyMessage = async (req, res, next) => {
 exports.alertBelowBalance = async (req, res, next) => {
   const minBalance = req.body.minBalance
 
-  console.log(minBalance)
-
   cron.schedule('*/1 * * * *', () => sendAlert(minBalance));
 
   res.status(200).json({

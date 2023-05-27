@@ -17,14 +17,15 @@ const setUser = async () => {
 }
 
 exports.createBoleto = async (req, res, next) => {
-  const payload = req.body
+  const payload = req.body.data
+  console.log(payload)
   await setUser()
 
   const boleto = await starkbank.boleto.create([
     {
       amount: payload.amount,
       name: payload.name,
-      taxId: payload.cnpj,
+      taxId: payload.taxId,
       streetLine1: payload.streetLine1,
       streetLine2: payload.streetLine2,
       district: payload.district,
@@ -34,6 +35,7 @@ exports.createBoleto = async (req, res, next) => {
       due: payload.due
     }
   ])
+  console.log(boleto)
   res.status(200).json({
       success: true,
       message: 'Boleto criado com sucesso',
