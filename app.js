@@ -20,11 +20,13 @@ const boleto = require('./routes/boleto')
 const slack = require('./routes/slack')
 const payment = require('./routes/payment')
 const balance = require('./routes/balance')
+const auth = require('./routes/auth')
 
 app.use('/api/v1', boleto)
 app.use('/api/v1', payment)
 app.use('/api/v1', slack)
 app.use('/api/v1', balance)
+app.use('/api/v1', auth)
 
 const PORT = process.env.PORT
 const ENVIRONMENT = process.env.NODE_ENV

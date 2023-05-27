@@ -13,8 +13,6 @@ const balanceApiUrl = apiEndpoint + 'api/v1/getBalance'
 
 const slackClient = new WebClient(token)
 
-// const channel = 'U059ZFBJUCR'
-
 const formatValue = (value) => value.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})
 
 const formatMessage = ({ description, payment, amount, status}) => `--------------------------------------------\nDescrição: ${description}\nCódigo de Barras: ${payment.line}\nValor: R$ ${formatValue(amount/100)}\nStatus: ${status}`
