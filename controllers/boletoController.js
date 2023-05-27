@@ -17,7 +17,7 @@ const setUser = async () => {
 }
 
 exports.createBoleto = async (req, res, next) => {
-  const payload = req.body || req.body.data
+  const payload = req.body.data
   console.log(payload)
   await setUser()
 

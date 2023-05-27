@@ -15,11 +15,13 @@ const slackClient = new WebClient(token)
 
 // const channel = 'U059ZFBJUCR'
 
-const formatMessage = ({ description, payment, amount, status}) => `--------------------------------------------\nDescrição: ${description}\nCódigo de Barras: ${payment.line}\nValor: R$ ${(amount/100).toFixed(2)}\nStatus: ${status}`
+const formatValue = (value) => value.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})
+
+const formatMessage = ({ description, payment, amount, status}) => `--------------------------------------------\nDescrição: ${description}\nCódigo de Barras: ${payment.line}\nValor: R$ ${formatValue(amount/100)}\nStatus: ${status}`
 
 const dailyPostFunction = async (centerId, slackId) => {
   const balance = (await axios.get(balanceApiUrl)).data.balance
-  const intro = `Olá! Seguem abaixo os boletos cujos vencimentos estão para o dia de hoje (${moment().format('DD/MM/YYYY')}).\nTais pagamentos são referentes ao centro de pagamentos de id ${centerId}.\nSeu saldo atual é de R$ ${balance.toFixed(2)}.`
+  const intro = `Olá! Seguem abaixo os boletos cujos vencimentos estão para o dia de hoje (${moment().format('DD/MM/YYYY')}).\nTais pagamentos são referentes ao centro de pagamentos de id ${centerId}.\nSeu saldo atual é de R$ ${formatValue(balance)}.`
   await slackClient.chat.postMessage({ channel: slackId, text: intro})
   const payments = (await axios.get(scheduledPaymentsApiUrl + `/${centerId}`)).data.todayRequests
   payments.map(payment => slackClient.chat.postMessage({ channel: slackId, text: formatMessage(payment)}))
@@ -27,7 +29,7 @@ const dailyPostFunction = async (centerId, slackId) => {
 
 const sendAlert = async (minBalance, slackId) => {
   const balance = (await axios.get(balanceApiUrl)).data.balance
-  const msg = `Atenção! Seu saldo está abaixo do limite configurado de R$ ${minBalance}.`
+  const msg = `Atenção! Seu saldo está abaixo do limite configurado de R$ ${formatValue(minBalance)}.`
   if (balance < minBalance) await slackClient.chat.postMessage({ channel: slackId, text: msg})
 }
 
