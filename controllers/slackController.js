@@ -26,8 +26,7 @@ const dailyPostFunction = async (centerId) => {
 
 const sendAlert = async (minBalance) => {
   const balance = (await axios.get(balanceApiUrl)).data.balance
-  console.log(balance, minBalance)
-  const msg = `Atenção! Seu saldo está abaixo do limite configurado de R$ ${minBalance/100}`
+  const msg = `Atenção! Seu saldo está abaixo do limite configurado de R$ ${minBalance/100}.`
   if (balance < minBalance) await slackClient.chat.postMessage({ channel, text: msg})
 }
 

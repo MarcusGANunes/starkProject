@@ -17,7 +17,7 @@ const setUser = async () => {
 }
 
 exports.createBoleto = async (req, res, next) => {
-  const payload = req.body.data
+  const payload = req.body || req.body.data
   console.log(payload)
   await setUser()
 
@@ -60,6 +60,7 @@ exports.sendMailBoleto = async (req, res, next) => {
   const sender = process.env.EMAIL_SENDER
   const senderPassword = process.env.SENDER_PASSWORD
   const receiver = req.params.email//'kalil1@criacaodeboleto-hacka23.sandbox.starkbank.com'
+  console.log(id, receiver)
 
   let transporter = nodemailer.createTransport({
     host: 'smtp-mail.outlook.com',
@@ -79,7 +80,7 @@ exports.sendMailBoleto = async (req, res, next) => {
     attachments: [
       {
         filename: `boleto-${id}`,
-        path: `boletoFiles/boleto-${id}.pdf`,
+        path: `./boletoFiles/boleto-${id}.pdf`,
       },
     ],
   };
@@ -94,6 +95,7 @@ exports.sendMailBoleto = async (req, res, next) => {
     res.status(400).json({
       success: false,
       message: 'Falha ao enviar o email',
+      error
     })
   }
 }
